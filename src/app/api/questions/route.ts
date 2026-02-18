@@ -13,8 +13,14 @@ export async function POST(req: Request) {
       
       CRITICAL VALIDATION STEP:
       Is "${jobTitle}" a plausible job role, career path, or serious hobby? 
-      If it is complete gibberish (e.g., "asdfgh"), a single random character, offensive, or clearly not a role (e.g., "pizza", "car"), 
-      return ONLY this JSON: { "error": "invalid_role", "message": "That doesn't sound like a known human role. Are you messing with the timeline?" }
+      A role must be an active identity (e.g., "Software Engineer", "Digital Artist", "Chess Player").
+      REJECT IT if it is:
+      1. An industry name or broad category (e.g., "Technology", "Healthcare", "Finance").
+      2. Complete gibberish or random characters (e.g., "asdfgh", "x").
+      3. Clearly not a human role or hobby (e.g., "pizza", "car", "internet").
+      4. Offensive or nonsensical.
+      
+      If rejected, return ONLY this JSON: { "error": "invalid_role", "message": "That's an industry or a category, not a job role. We need to know what YOU do in that space!" }
 
       Otherwise, generate 11 unique multiple-choice or scale questions for an "AI Proof" resilience diagnostic.
       
