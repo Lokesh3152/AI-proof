@@ -42,7 +42,7 @@ export async function POST(req: Request) {
       Return ONLY the JSON.
     `;
 
-        const modelNames = ["gemini-flash-latest", "gemini-pro-latest", "gemini-1.5-flash", "gemini-pro"];
+        const modelNames = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-1.5-flash-latest", "gemini-1.5-pro-latest"];
         let text = "";
         let lastError = null;
 
