@@ -12,15 +12,21 @@ export async function POST(req: Request) {
       The user is a "${jobTitle}" in the "${industry}" industry with "${experience}" level of experience.
       
       CRITICAL VALIDATION STEP:
-      Is "${jobTitle}" a plausible job role, career path, or serious hobby? 
-      A role must be an active identity (e.g., "Software Engineer", "Digital Artist", "Chess Player").
-      REJECT IT if it is:
-      1. An industry name or broad category (e.g., "Technology", "Healthcare", "Finance").
-      2. Complete gibberish or random characters (e.g., "asdfgh", "x").
-      3. Clearly not a human role or hobby (e.g., "pizza", "car", "internet").
-      4. Offensive or nonsensical.
+      You must determine if "${jobTitle}" is a valid, specific job role or hobby. 
+      A valid role describes *what someone does*, not just *where they work*.
       
-      If rejected, return ONLY this JSON: { "error": "invalid_role", "message": "That's an industry or a category, not a job role. We need to know what YOU do in that space!" }
+      REJECTION EXAMPLES:
+      - Industry/Field: "Technology", "Tech", "Healthcare", "Finance", "Education" -> REJECT.
+      - Broad Category: "Business", "Management", "Science", "Retail" -> REJECT.
+      - Vague Noun: "Stuff", "Things", "Job", "Person", "Human" -> REJECT.
+      - Nonsense: "asdfgh", "qwerty", "!", "x" -> REJECT.
+      - Non-role Object: "Pizza", "Car", "Internet", "Laptop" -> REJECT.
+
+      ACCEPTANCE EXAMPLES:
+      - Specific Role: "Software Engineer", "Nurse", "Barista", "CEO", "Plumber" -> ACCEPT.
+      - Specific Hobby: "Chess Player", "Surfer", "Stargazer" -> ACCEPT.
+      
+      If rejected, return ONLY this JSON: { "error": "invalid_role", "message": "That's an industry or a broad category, not a specific role. Tell us what YOU actually do!" }
 
       Otherwise, generate 11 unique multiple-choice or scale questions for an "AI Proof" resilience diagnostic.
       
